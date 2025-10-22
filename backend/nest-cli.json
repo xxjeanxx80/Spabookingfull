@@ -1,0 +1,119 @@
+{
+  "collection": "@nestjs/schematics",
+  "monorepo": true,
+  "language": "ts",
+  "root": "apps",
+  "sourceRoot": "apps",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": false,
+    "tsConfigPath": "tsconfig.build.json"
+  },
+  "projects": {
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": { "tsConfigPath": "apps/api-gateway/tsconfig.app.json" }
+    },
+    "auth-service": {
+      "type": "application",
+      "root": "apps/auth-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/auth-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/auth-service/tsconfig.app.json" }
+    },
+    "user-service": {
+      "type": "application",
+      "root": "apps/user-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/user-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/user-service/tsconfig.app.json" }
+    },
+    "spa-service": {
+      "type": "application",
+      "root": "apps/spa-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/spa-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/spa-service/tsconfig.app.json" }
+    },
+    "staff-service": {
+      "type": "application",
+      "root": "apps/staff-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/staff-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/staff-service/tsconfig.app.json" }
+    },
+    "booking-service": {
+      "type": "application",
+      "root": "apps/booking-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/booking-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/booking-service/tsconfig.app.json" }
+    },
+    "payment-service": {
+      "type": "application",
+      "root": "apps/payment-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/payment-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/payment-service/tsconfig.app.json" }
+    },
+    "payout-service": {
+      "type": "application",
+      "root": "apps/payout-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/payout-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/payout-service/tsconfig.app.json" }
+    },
+    "coupons-service": {
+      "type": "application",
+      "root": "apps/coupons-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/coupons-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/coupons-service/tsconfig.app.json" }
+    },
+    "post-service": {
+      "type": "application",
+      "root": "apps/post-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/post-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/post-service/tsconfig.app.json" }
+    },
+    "report-service": {
+      "type": "application",
+      "root": "apps/report-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/report-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/report-service/tsconfig.app.json" }
+    },
+    "media-service": {
+      "type": "application",
+      "root": "apps/media-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/media-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/media-service/tsconfig.app.json" }
+    },
+    "notification-service": {
+      "type": "application",
+      "root": "apps/notification-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/notification-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/notification-service/tsconfig.app.json" }
+    },
+    "dashboard-service": {
+      "type": "application",
+      "root": "apps/dashboard-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/dashboard-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/dashboard-service/tsconfig.app.json" }
+    },
+    "admin-panel-service": {
+      "type": "application",
+      "root": "apps/admin-panel-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/admin-panel-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/admin-panel-service/tsconfig.app.json" }
+    }
+  }
+}
