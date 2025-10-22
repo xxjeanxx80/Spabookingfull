@@ -1,62 +1,84 @@
-# Beauty Booking Hub – Frontend Prototype
+# Beauty Booking Hub – Full-Stack Prototype
 
-This repository contains a responsive React + TypeScript interface for the Beauty Booking Hub microservices platform. The UI showcases core journeys for three personas—customers, spa owners, and administrators— while highlighting their respective supporting microservices.
+This repository provides a responsive React frontend together with a NestJS microservices backend skeleton for the Beauty Booking Hub platform. The experience covers the three main personas—customers, spa owners, and administrators—while mapping features to individual backend services that can evolve into fully fledged microservices.
 
-## Tech stack
+## Monorepo layout
+```
+frontend/                 # Vite + React + Tailwind responsive UI
+backend/                  # NestJS microservices workspace
+  apps/                   # Individual services (auth, users, spas, bookings, ...)
+  libs/common/            # Shared DTOs, filters, interceptors, guards
+```
+
+## Frontend stack
 - [Vite](https://vitejs.dev/) + React 18 (TypeScript)
 - TailwindCSS for styling
 - React Router for navigation
-- React Query for data fetching state management
+- React Query for async workflows
 - Recharts for dashboard visualisations
 - Leaflet for interactive spa map previews
 
-## Getting started
+### Running the frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+> **Note:** Package installation requires access to npm. If the default registry is blocked in your environment, configure an alternative mirror before running `npm install`.
 
-> **Note:** Package installation requires access to npm. If the default registry is blocked, configure an alternative mirror before running `npm install`.
+### UI highlights
+- **Customer hub** – OAuth2 entry points, geo-enabled spa discovery with radius filters, booking composer (staff availability, coupons, loyalty insights), booking history with reschedule/cancel actions, and rating workflow.
+- **Spa owner console** – Service catalogue and pricing, staff scheduler with time-off management, booking triage, revenue vs payout analytics, and payout request tracking.
+- **Admin control centre** – Platform KPIs, approval queue for new spas, report resolution workspace, discount code manager, audit logs, and global settings toggles.
 
-## Available scripts
-- `npm run dev` – start Vite dev server
-- `npm run build` – type-check and build production bundle
-- `npm run preview` – serve the production build locally
+## Backend stack
+- [NestJS](https://nestjs.com/) (v10) configured as a multi-app workspace
+- REST-first services with placeholders for gRPC / RabbitMQ adapters
+- PostgreSQL via TypeORM-ready DTOs and entities (stubbed in-memory repositories for now)
+- OAuth2 + JWT ready (Google/Facebook strategies stubbed)
+- Shared utilities for logging, request correlation IDs, error handling, and pagination
 
-## Project structure
+### Service catalogue
+Each service lives under `backend/apps/<service-name>` and follows the folder structure requested (`src/common`, `src/modules/<feature>/dto|entities|controllers|services`).
+
+| Service | Purpose |
+| --- | --- |
+| `api-gateway` | Aggregated view models for customer, owner, and admin dashboards |
+| `auth-service` | OAuth2 login stubs, JWT issuance, refresh tokens |
+| `user-service` | Customer CRUD, loyalty program management |
+| `spa-service` | Spa registration, approval workflow, geolocation search |
+| `staff-service` | Staff profiles, skills, shifts, and time-off management |
+| `booking-service` | Booking lifecycle (create, reschedule, cancel) and ratings |
+| `payment-service` | Payment capture and refund stubs |
+| `payout-service` | Spa owner withdrawals and status tracking |
+| `coupons-service` | Campaign & discount code management |
+| `post-service` | Spa marketing posts/blog content |
+| `report-service` | Abuse/service flag reports and resolution |
+| `media-service` | Asset upload registry for spa, service, and staff imagery |
+| `notification-service` | Email/SMS/push notification history |
+| `dashboard-service` | Platform metrics and KPI trends |
+| `admin-panel-service` | System settings, role assignments, audit logs |
+
+All services expose a `/health` endpoint plus REST controllers with mocked data to illustrate expected payloads.
+
+### Running the backend services
+```bash
+cd backend
+npm install            # installs NestJS, TypeORM, and tooling dependencies
+npm run serve:auth     # start an individual service in watch mode
+npm run serve:gateway  # start the API gateway
 ```
-frontend/
-  src/
-    components/      # Shared UI components
-    data/            # Mock data to simulate backend responses
-    features/        # Feature-specific hooks & utilities per persona
-    hooks/           # Custom reusable hooks
-    pages/           # Route-level views for Customer, Owner, Admin
-    utils/           # Helpers (formatting, geolocation calculations)
-```
+> The workspace uses the Nest CLI. Substitute `auth` with any other service name (e.g., `serve:user`, `serve:booking`).
 
-## Feature highlights
-### Customer hub
-- OAuth2 login buttons for Google & Facebook
-- Geo-enabled spa discovery with radius filters and an interactive map
-- Booking composer with staff availability, coupons, and loyalty insights
-- Booking history with quick reschedule/cancel actions and rating widget
+Each service loads configuration from environment variables (`PORT`, `DATABASE_URL`, `QUEUE_NAME`) with sensible defaults and unique port assignments (API Gateway on 3000, Auth on 3010, ... Admin panel on 3023).
 
-### Spa owner console
-- Service catalogue management and staff roster overview
-- Shift planner synced with Booking & Staff services
-- Revenue vs payout analytics plus payout request form
-- Inbox for incoming bookings with accept/reject flows
-
-### Admin control centre
-- Platform KPIs surfaced by the Dashboard Service
-- Approval queue for new spas and escalation workflow for reports
-- Global system toggles (2FA, audit trail) and campaign builder
-- Discount code inventory powered by the Campaigns microservice
+### Shared conventions
+- `libs/common` hosts DTO helpers, pagination utilities, interceptors, and guards used across services.
+- Global validation, logging, and correlation ID middleware are applied in every service entry point.
+- Response envelopes follow a consistent `{ data, metadata }` shape via `createApiResponse`.
 
 ## Next steps
-- Wire the UI to real NestJS microservice endpoints (REST/gRPC)
-- Connect OAuth2 flows via the Auth service
-- Replace mock data with TypeORM-backed PostgreSQL queries
-- Containerise with Docker/Kubernetes manifests alongside backend services
+- Replace in-memory repositories with TypeORM entities backed by PostgreSQL.
+- Wire message patterns/RabbitMQ clients for inter-service communication.
+- Connect the React UI to the API Gateway endpoints.
+- Add Docker Compose / Kubernetes manifests for local orchestration of all services.
